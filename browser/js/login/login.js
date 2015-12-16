@@ -18,12 +18,9 @@ app.controller('LoginCtrl', function($scope, AuthService, $state) {
         $scope.error = null;
 
         AuthService.login(loginInfo).then(function() {
-                //console.log("LOGIN", loginInfo);
-                // $state.go('userDash', loginInfo.id);
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             })
             .then(function(user) {
-                //console.log("LOGIN USER", user);
                 $state.go('userDash', {
                     id: user._id
                 });

@@ -5,14 +5,13 @@ app.factory("Interactory", function($compile, ParseTreeFactory, CssTreeFactory, 
 				.dropzone({
 					accept: '#dropThumb',
 					overlap: 0.75,
-					ondrop: function(event) {
-						var eventClass = ParseTreeFactory.addRow($scope)
-						console.log("EVEnTCLASS FROM INTERACTORY", eventClass)
+					ondrop: function() {
+						var eventClass = ParseTreeFactory.addRow($scope);
 						CssTreeFactory.addViewClass(eventClass, $scope);
-						$scope.$digest()
+						$scope.$digest();
 					}
 
-				})
+				});
 
 
 
@@ -20,8 +19,7 @@ app.factory("Interactory", function($compile, ParseTreeFactory, CssTreeFactory, 
 				.dropzone({
 					accept: '#elemThumb',
 					ondrop: function(event) {
-						var thisComponentName = event.relatedTarget.getAttribute('component')
-						console.log(thisComponentName)
+						var thisComponentName = event.relatedTarget.getAttribute('component');
 							//thisCOmponentName = "Navbar", "Image", etc...
 						var eventClass = ParseTreeFactory.addElement($scope, event.target.className.split(' ')[1], thisComponentName);
 						CssTreeFactory.addChildClass(eventClass, $scope);
@@ -34,7 +32,6 @@ app.factory("Interactory", function($compile, ParseTreeFactory, CssTreeFactory, 
 					},
 				})
 				.on('resizemove', function(event) {
-					// console.log("scale percent",ZoomService.getZoom())
 					var scaleRatio = ZoomService.getZoom() / 100;
 					var target = event.target,
 						x = (parseFloat(target.getAttribute('data-x')) || 0),
@@ -43,15 +40,13 @@ app.factory("Interactory", function($compile, ParseTreeFactory, CssTreeFactory, 
 					// update the element's style
 					target.style.width = event.rect.width / scaleRatio + 'px';
 					target.style.height = event.rect.height / scaleRatio + 'px';
-					// if($(event.target).children) console.log("HEY HERE'S THE RESIZING INFO", $(event.target).children[0]);
 					// translate when resizing from top or left edges
 					x += event.deltaRect.left;
 					y += event.deltaRect.top;
 
 					target.style.webkitTransform = target.style.transform =
 						'translate(' + x + 'px,' + y + 'px)';
-					// console.log("RESIZE INFO HEY HERE", target.className);
-					if ($scope.project.css[target.className.split(" ")[1]]) $scope.project.css[target.className.split(" ")[1]]["height"] = target.style.height;
+					if ($scope.project.css[target.className.split(" ")[1]]) $scope.project.css[target.className.split(" ")[1]].height = target.style.height;
 					target.setAttribute('data-x', x);
 					target.setAttribute('data-y', y);
 					$scope.$digest();
@@ -59,5 +54,5 @@ app.factory("Interactory", function($compile, ParseTreeFactory, CssTreeFactory, 
 				});
 
 		}
-	}
-})
+	};
+});

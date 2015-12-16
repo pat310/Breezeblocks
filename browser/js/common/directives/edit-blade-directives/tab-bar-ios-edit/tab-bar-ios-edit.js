@@ -2,7 +2,7 @@ app.directive('tabBarIosEdit', function() {
 	return {
 		restrict: "E",
 		templateUrl: 'js/common/directives/edit-blade-directives/tab-bar-ios-edit/tab-bar-ios-edit.html',
-		link: function(scope, elem, attr) {
+		link: function(scope) {
 			scope.tabSelected;
 			scope.tabBarItems = {
 				"bookmarks": {
@@ -49,20 +49,18 @@ app.directive('tabBarIosEdit', function() {
 					systemIcon: "top-rated",
 					glyph: 'glyphicon-user'
 				}
-			}
+			};
 			scope.addTabItem = function(tabArray) {
 				var toReturnObj = {
 					systemIcon: scope.tabBarItems[scope.tabSelected].systemIcon,
 					glyph: scope.tabBarItems[scope.tabSelected].glyph,
 					index: String(tabArray.length)
-				}
-				console.log(toReturnObj)
+				};
 				if (scope.tabSelected) tabArray.push(toReturnObj);
-			}
+			};
 
 		}
-	}
-})
+	};
+});
 
 
-//('bookmarks', 'contacts', 'downloads', 'favorites', 'featured', 'history', 'more', 'most-recent', 'most-viewed', 'recents', 'search', 'top-rated'

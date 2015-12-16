@@ -3,14 +3,11 @@ var router = require('express').Router();
 var path = require('path');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Build = mongoose.model('Build');
 var generator = require('../../reactUtils/generator');
 var fs = require('fs-extra');
 var Github = require('github-api');
 var createNewRepo = require('../../reactUtils/githubCreator');
 var writeFiles = require('../../reactUtils/writeFiles');
-var fileContent = require('../../reactUtils/recursiveRead');
-var _ = require('lodash');
 var chalk = require('chalk')
 
 //for deep inspection in console
@@ -19,13 +16,13 @@ var chalk = require('chalk')
 
 module.exports = router;
 
-router.get('/:user/:build', function(req, res, next){
+router.get('/:user/:build', function(req, res){
 	var filePath = path.join(__dirname, '../../reactUtils/UserBuilds', req.params.user, 'target.zip');
 	var directoryPath = path.join(__dirname, '../../reactUtils/UserBuilds', req.params.user);
 	res.download(filePath, "reactNativeZipped.zip", function(err){
 		if(err) console.log("There was an error downloading zipped file", err)
-			fs.remove(directoryPath, function(err){
-				if(err) console.error("error deleting", err);
+			fs.remove(directoryPath, function(error){
+				if(error) console.error("error deleting", error);
 			});
 	});
 
@@ -37,7 +34,7 @@ router.post('/', function (req, res, next) {
 
 	generator(req.body.pages, req.body.userId, req.body.buildId)
 	.then(function(zippedProject){
-		if(!zippedProject) throw err;
+		if(!zippedProject) throw new Error();
 
 		return zippedProject;
 

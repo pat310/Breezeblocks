@@ -5,13 +5,13 @@ app.config(function($stateProvider) {
         controller: 'homeCtrl',
         resolve: {
             user: function(AuthService) {
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             }
         }
     });
 });
 
-app.controller('homeCtrl', function($scope, $rootScope, AuthService, AUTH_EVENTS, user) {
+app.controller('homeCtrl', function($scope, $rootScope, AuthService, AUTH_EVENTS, user, $state) {
     $scope.user = user || null;
 
     $scope.isLoggedIn = function() {
@@ -31,9 +31,8 @@ app.controller('homeCtrl', function($scope, $rootScope, AuthService, AUTH_EVENTS
     };
 
     var setUser = function() {
-        AuthService.getLoggedInUser().then(function(user) {
-            $scope.user = user;
-            console.log("NAVBAR USER", user);
+        AuthService.getLoggedInUser().then(function(newUser) {
+            $scope.user = newUser;
         });
     };
 
@@ -41,9 +40,7 @@ app.controller('homeCtrl', function($scope, $rootScope, AuthService, AUTH_EVENTS
         $scope.user = null;
     };
 
-
-
     $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
     $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
-})
+});

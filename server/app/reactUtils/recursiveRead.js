@@ -19,7 +19,7 @@ module.exports = function(userId, buildId, projectName){
 			else arr.push(newFilePath);
 		});
 		return arr;
-	};
+	}
 	
 	var filesToRead = recursiveRead(baseFilePath);
 
@@ -41,92 +41,8 @@ module.exports = function(userId, buildId, projectName){
 	.then(function(fileContent){
 		for(var i = 0; i<fileContent.length; i++){
 			var virtualFilePath = projectName + filesToRead[i].slice(baseFilePath.length);
-			//var virtualFilePath = filesToRead[i].slice(baseFilePath.length);
 			fileObject[virtualFilePath] = fileContent[i];
 		}
 		return fileObject;
 	});
 };
-
-// var promisifiedReadDir = function(filePath){
-// 	return new Promise(function(resolve, reject){
-// 		fs.readdir(filePath, function(err, files){
-// 			if(err) reject(err);
-// 			else resolve(files);
-// 		});
-// 	});
-// };
-
-// var promisifiedStat = function(filePath){
-// 	return new Promise(function(resolve, reject){
-// 		fs.stat(filePath, function(err, stat){
-// 			if(err) reject(err);
-// 			else resolve(stat);
-// 		});
-// 	});
-// };
-
-// var promisifiedReadFile = function(filePath){
-// 	return new Promise(function(resolve, reject){
-// 		fs.readFile(filePath, function(err, data){
-// 			if(err) reject(err);
-// 			else resolve(data);
-// 		});
-// 	});
-// };
-
-// module.exports = function(baseFilePath, projectName){
-// 	var fileObject = {};
-// 	var virtualPaths = [];
-// 	projectName = projectName || 'reactNative';
-// 	var arr=[];
-
-// 	var recursiveRead = function(filePath){
-// 		var newFilePath = [];
-// 		return promisifiedReadDir(filePath)
-// 		.then(function(files){
-// 			var statPromiseArray = files.map(function(file, index){
-// 				newFilePath.push(path.join(filePath, file));
-// 				return promisifiedStat(path.join(filePath, file));
-// 			});
-// 			return Promise.each(statPromiseArray, function(){});
-// 		})
-// 		.then(function(stat){
-// 			// return newFilePath.map(function(element, index){
-// 			// 	if(stat[index].isDirectory()) recursiveRead(element);
-// 			// 	else{
-// 			// 		virtualPaths.push(projectName + element.slice(baseFilePath.length));
-// 			// 		return promisifiedReadFile(element);
-// 			// 	}
-// 			// });
-
-// 			newFilePath.forEach(function(file, index){
-// 				if(stat[index].isDirectory()) recursiveRead(file);
-// 				else{
-// 					virtualPaths.push(projectName + file.slice(baseFilePath.length));
-// 					arr.push(promisifiedReadFile(file));
-// 				}
-// 			});
-
-// 			return arr;	
-// 		})
-// 		.then(function(promiseReadFileArray){
-// 			return Promise.each(promiseReadFileArray, function(){});
-// 		})
-// 		.then(function(fileContent){
-// 			console.log(virtualPaths.length)
-// 			virtualPaths.forEach(function(element, index){
-// 				fileObject[element] = fileContent[index];
-// 			});
-
-// 			return fileObject;
-// 		});
-
-// 	};
-
-// 	return recursiveRead(baseFilePath);
-// };
-
-
-
-

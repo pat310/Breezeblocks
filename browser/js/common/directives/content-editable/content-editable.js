@@ -7,20 +7,11 @@ app.directive('contenteditable', ['$sce', function($sce, $compile) {
 
       // Specify how UI should be updated
       ngModel.$render = function() {
-        ngModel.$viewValue
         element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
       };
 
-      // Listen for change events to enable binding
-      element.on('blur keyup change', function() {
-
-        scope.$evalAsync(read);
-      });
-      initialRead(); // initialize
-
       // Write data to the model
       function read() {
-        console.log("REWRITING")
         var text = element.text();
         // text = $compile(text)(scope);
         // When we clear the content editable the browser leaves a <br> behind
@@ -32,7 +23,6 @@ app.directive('contenteditable', ['$sce', function($sce, $compile) {
       }
 
       function initialRead() {
-        console.log("FIRST WRITE");
         var text = element.text();
         text = $compile(text)(scope);
         // When we clear the content editable the browser leaves a <br> behind
@@ -42,6 +32,14 @@ app.directive('contenteditable', ['$sce', function($sce, $compile) {
         // }
         ngModel.$setViewValue(text);
       }
+      
+      // Listen for change events to enable binding
+      element.on('blur keyup change', function() {
+
+        scope.$evalAsync(read);
+      });
+      initialRead(); // initialize
+
     }
   };
 }]);

@@ -2,9 +2,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var _ = require("lodash");
-var path = require('path');
 var Build = mongoose.model('Build');
-var _ = require('lodash');
 module.exports = router;
 
 router.param('id', function(req, res, next, id) {
@@ -27,7 +25,7 @@ router.get('/', function(req, res, next) {
 });
 
 //GET One app
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function(req, res) {
 	res.json(req.app);
 });
 

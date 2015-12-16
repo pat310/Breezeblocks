@@ -1,7 +1,5 @@
-<!-- <pre>{{project|json}}</pre> -->
 	<h3 id="Title" ng-bind="project.title"></h3>
 <div class="edit-container">
-<!-- <ui-navbar></ui-navbar> -->
 	<div id="elements" class="edit-blade col-md-2 col-sm-2">
 
 		<div id="elementsContainer">
@@ -31,7 +29,6 @@
 	</div>
 
 	<div id="outer-canvas" class="edit-blade col-md-8 col-sm-8">
-			<!-- <ui-drop-area class="drop-area ng-class:'getClass()'"></ui-drop-area> -->
 		<div id="app">
 			<div id="statusbar">Carrier<img id="wificon" src="images/wifi.png"></img><span id="time">{{time | date:"h:mm a"}}</span><img id="battericon" src="images/battery.png"></img></div>
 			<div ng-repeat="View in project.html" dnd-list="View.children" hover-x class='{{View.className.join(" ")}}' ng-class="{dropBorder: showDropZones}"

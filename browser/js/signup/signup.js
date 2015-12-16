@@ -21,7 +21,6 @@ app.controller('SignupCtrl', function($scope, AuthService, $state) {
                 return AuthService.getLoggedInUser()
             })
             .then(function(user) {
-                console.log("SIGNUP USER", user);
                 $state.go('userDash', {
                     id: user._id
                 });

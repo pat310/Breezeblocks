@@ -1,12 +1,11 @@
-app.directive("uiThumbnail", function($rootScope) {
+app.directive("uiThumbnail", function() {
 	return {
 		restrict: "E",
 		scope: {
 			component: "=",
 			background: '='
 		},
-		templateUrl: 'js/common/directives/ui-components/ui-thumbnail/ui-thumbnail.html',
-		link: function(scope, elem, attr) {
+		link: function(scope, elem) {
 			var clone;
 			var spanClone;
 
@@ -55,12 +54,11 @@ app.directive("uiThumbnail", function($rootScope) {
 					target.style.transform =
 					'translate(' + x + 'px, ' + y + 'px)';
 				// target.style.zIndex="100"
-				// console.log(target.style.zIndex)
 
 				// update the posiion attributes
 				target.setAttribute('data-x', x);
 				target.setAttribute('data-y', y);
 			}
 		}
-	}
-})
+	};
+});
